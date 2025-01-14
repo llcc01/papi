@@ -73,6 +73,20 @@
 #define rmb()		RISCV_FENCE(ir,ir)
 #define wmb()		RISCV_FENCE(ow,ow)
 
+#elif defined(__loongarch__)
+#define __sync()	__asm__ __volatile__("dbar 0" : : : "memory")
+
+#define fast_wmb()	__sync()
+#define fast_rmb()	__sync()
+#define fast_mb()	__sync()
+#define fast_iob()	__sync()
+#define wbflush()	__sync()
+
+#define wmb()		fast_wmb()
+#define rmb()		fast_rmb()
+#define mb()		fast_mb()
+#define iob()		fast_iob()
+
 #else
 #error Need to define rmb for this architecture!
 #error See the kernel source directory: tools/perf/perf.h file
