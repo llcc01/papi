@@ -282,11 +282,11 @@ static inline long long get_cycles()
 }
 
 #elif defined(__loongarch__)
-static inline long long get_cycles()
+static inline unsigned long get_cycles()
 {
     uint64_t result;
     __asm__ volatile(
-        "rdtime %0"
+        "rdtime.d %0,$r0"
         : "=r" (result));
     return result;
 }
