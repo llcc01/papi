@@ -42,9 +42,9 @@ typedef ucontext_t hwd_ucontext_t;
 #elif defined(__riscv)
 #define OVERFLOW_ADDRESS(ctx) ctx.ucontext->uc_mcontext.__gregs[REG_PC]
 #elif defined(__loongarch__)
-#if (strcmp(_LOONGARCH_ARCH, "loongarch64") == 0) // ABI1.0
+#if defined(_LOONGARCH_ARCH_LOONGARCH64) // ABI1.0
 #define OVERFLOW_ADDRESS(ctx) ctx.ucontext->uc_mcontext.__pc
-#elif (strcmp(_LOONGARCH_ARCH, "la64v1.0") == 0) // ABI2.0
+#elif defined(__loongarch_version_major) // ABI2.0
 #define OVERFLOW_ADDRESS(ctx) ctx.ucontext->uc_mcontext.sc_pc
 #else
 #error "Unsupported LoongArch ABI!"
