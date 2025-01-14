@@ -281,6 +281,16 @@ static inline long long get_cycles()
     return retval;
 }
 
+#elif defined(__loongarch__)
+static inline long long get_cycles()
+{
+    uint64_t result;
+    __asm__ volatile(
+        "rdtime %0"
+        : "=r" (result));
+    return result;
+}
+
 #elif (defined(__arm__) || defined(__mips__) || defined(__hppa__)) || defined(__riscv)
 static inline long long
 get_cycles( void )
